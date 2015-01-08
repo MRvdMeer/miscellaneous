@@ -1,2 +1,2 @@
 # miscellaneous
-Miscellaneos Stuff
+Miscellaneous Stuff
