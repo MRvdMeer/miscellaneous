@@ -50,7 +50,7 @@ def RomanToNumber(roman):
 	input_number = roman.upper()
 	position = 0
 	result = 0
-	length = len(input)
+	length = len(input_number)
 	base_10_characters = {'M': 0, 'C': 0, 'X': 0, 'I': 0}
 	non_base_10_characters = ['D', 'L', 'V']
 	still_allowed_characters = ['M', 'D', 'C', 'L', 'X', 'V', 'I']
@@ -66,7 +66,7 @@ def RomanToNumber(roman):
 			index = still_allowed_characters.index(letter)
 			if input_number[position:position+2] in special_combos:
 				# print("Special Combo Activated!")
-				s = input[position:position+2]
+				s = input_number[position:position+2]
 				still_allowed_characters = still_allowed_characters[index+1:]
 				# print("Still allowed:", still_allowed_characters)
 				result += special_combos[s]
@@ -80,7 +80,7 @@ def RomanToNumber(roman):
 				elif letter in non_base_10_characters:
 					still_allowed_characters = still_allowed_characters[index+1:]
 					# print("Still allowed:", still_allowed_characters)
-				result += letter_values[input[position]]
+				result += letter_values[input_number[position]]
 				position = position + 1
 		elif input_number[position] in letter_values:
 			print("Invalid Input - : Roman number %s not well-defined." % roman)
@@ -106,7 +106,7 @@ def NumberToRoman(number):
 	values_to_check = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 	letter_values = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
 	result = ""
-	input = number
+	input_number = number
 	if not isinstance(number, int):
 		# number should be an integer
 		print("Invalid input - input number should be an integer")
@@ -121,9 +121,9 @@ def NumberToRoman(number):
 		return
 	else:
 		for i in range(len(values_to_check)):
-			while input >= values_to_check[i]:
+			while input_number >= values_to_check[i]:
 				result = result + letter_values[i]
-				input = input - values_to_check[i]
+				input_number = input_number - values_to_check[i]
 	return result
 
 
