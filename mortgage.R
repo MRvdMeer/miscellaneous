@@ -39,7 +39,7 @@ mortgage <- function(type = "linear", principal = 0, interest = 5, months = 360)
   period <- 1:months
   output <- cbind(period, start_value, prin_repayment, int_payment, ending_value, total_payment)
   ##cat("Total Payment:",sum(output[,6]), "| Average Monthly Payment:",mean(output[,6]), "| Highest Monthly Payment:",max(output[,6]),"\n")
-  return(output)
+  output
 }
 
 addMatrix <- function(matrix1,matrix2){
@@ -59,7 +59,7 @@ addMatrix <- function(matrix1,matrix2){
             output[i,j] <- tryCatch(matrix1[i,j], error = function(e){return(0)}) + tryCatch(matrix2[i,j], error = function(e){return(0)})
         }
     }
-    return(output)
+    output
 }
 
 combo_mortgage <- function(linearAmount = 0, linearInterest = 5, linearMonths = 360, annuityAmount = 0, annuityInterest = 5, annuityMonths = 360){
@@ -78,5 +78,5 @@ combo_mortgage <- function(linearAmount = 0, linearInterest = 5, linearMonths = 
     cat("Total Payment:",sum(output[,6]), 
         "| Average Monthly Payment:",mean(output[,6]), 
         "| Highest Monthly Payment:",max(output[,6]),"\n")
-    return(output)
+    output
 }
