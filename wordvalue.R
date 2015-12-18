@@ -2,6 +2,8 @@
 # determine if the value is exactly 100
 # if so, save in an array and print
 
+filepath <- "OpenTaal-210G-basis-gekeurd.txt"
+
 compute.value <- function(word){
   if(!is.character(word)){stop("not a word")}
   if(length(word) > 1){stop("enter only one word")}
@@ -9,7 +11,7 @@ compute.value <- function(word){
   sum(match(word.letters, letters), na.rm = FALSE)
 }
 
-word.list <- read.delim(file = "OpenTaal-210G-basis-gekeurd.txt", header = FALSE, stringsAsFactors = FALSE)[, 1]
+word.list <- read.delim(file = filepath, header = FALSE, stringsAsFactors = FALSE)[, 1]
 value.words <- NULL
 
 for(word in word.list){
