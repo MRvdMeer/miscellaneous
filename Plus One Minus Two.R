@@ -50,15 +50,22 @@ rm(i, x, y)
 str(results)
 table(results$result)
 
-ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~prob, nrow = 5)
-ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~result)
+ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~prob, nrow = 5) + theme_bw()
+ggplot(data = results, aes(x = count)) + geom_histogram(binwidth = 5, fill = "red") + facet_wrap(~result) + theme_bw()
+ggplot(data = results, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
+ggplot(data = results, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw()
 
 results.summary <- results %>% group_by(prob) %>% 
     summarize(avg.shots = mean(count),
-              num.wins = sum(result))
+              num.wins = sum(result),
+              win.pct = num.wins / 1000,
+              shot.pct = weighted.mean(pct, count))
 
-ggplot(data = results.summary, aes(x = prob, y = num.wins)) + geom_line(col = "blue")
-ggplot(data = results.summary, aes(x = prob, y = avg.shots)) + geom_line(col = "red")
+print(results.summary, n = 21)
+
+ggplot(data = results.summary, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
+ggplot(data = results.summary, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
+ggplot(data = results.summary, aes(x = prob, y = pct)) + geom_line(col = "orange") + theme_bw()
 
 # Now let's zoom in a bit more between prob = .6 and prob = .7
 
@@ -77,9 +84,18 @@ for(i in x){
 results.zoom <- tbl_df(cbind(prob = y, results.zoom))
 rm(i, x, y)
 
+ggplot(data = results.zoom, aes(x = factor(result), y = pct, col = factor(result))) + geom_boxplot() + theme_bw()
+ggplot(data = results.zoom, aes(x = factor(result), y = count, col = factor(result))) + geom_boxplot() + theme_bw()
+
+
 results.zoom.sum <- results.zoom %>% group_by(prob) %>% 
     summarize(avg.shots = mean(count),
-              num.wins = sum(result))
+              num.wins = sum(result),
+              win.pct = num.wins/1000,
+              shot.pct = weighted.mean(pct, count))
 
-ggplot(data = results.zoom.sum, aes(x = prob, y = num.wins)) + geom_line(col = "blue")
-ggplot(data = results.zoom.sum, aes(x = prob, y = avg.shots)) + geom_line(col = "red")
+print(results.zoom.sum, n = 21)
+
+ggplot(data = results.zoom.sum, aes(x = prob, y = num.wins)) + geom_line(col = "blue") + theme_bw()
+ggplot(data = results.zoom.sum, aes(x = prob, y = avg.shots)) + geom_line(col = "red") + theme_bw()
+ggplot(data = results.zoom.sum, aes(x = prob, y = pct)) + geom_line(col = "orange") + theme_bw()
